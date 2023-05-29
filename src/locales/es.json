@@ -1,0 +1,13 @@
+{
+    "Users name or Email": "Nombre de usuario o email",
+    "Password": "Contraseña",
+    "name": "Nombre",
+    "isbn": "ISBN",
+    "author": "Autor",
+    "publisher": "Editorial",
+    "genre": "Género",
+    "year": "Año",
+    "price": "Precio",
+    "available_online": "Disponible en linea",
+    "summary": "Resumen"
+}

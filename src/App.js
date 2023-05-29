@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { useState } from 'react';
-import BookDetail from "./components/bookDetail";
 import Books from "./components/books";
 import NavBar from "./components/navbar";
 import Login from "./components/login"; 
@@ -23,7 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login currentUser={admin} changeUser={setUpdated}  /> } />
         <Route path="/books" element={<Books />} />
-        <Route path="/books/:bookIsbn" element={<BookDetail />} />
+        <Route path="/books/:bookIsbn" element={<Books />} />
       </Routes>
     </BrowserRouter>
   </div>

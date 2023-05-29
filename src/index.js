@@ -1,23 +1,24 @@
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import {IntlProvider} from 'react-intl';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { IntlProvider } from "react-intl";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.min.css";
+import localeEsMessages from "./locales/es";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Container className="mt-3">
-    <React.StrictMode>
-    <App />
-  </React.StrictMode>
-  </Container>
-  
+  <IntlProvider locale="es-ES" messages={localeEsMessages}>
+    <Container className="mt-3">
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Container>
+  </IntlProvider>
 );
 
 // If you want your app to work offline and load faster, you can change

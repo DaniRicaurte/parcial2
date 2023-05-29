@@ -1,45 +1,88 @@
-import React, { useEffect, useState } from 'react';
+import React from "react";
 import Button from "react-bootstrap/Button";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+
+const {  useState } = require("react");
+
 
 function Login(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [users, setUsers]=useState("");
+  
+  const [mail, setMail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = (event) => {
-    if(username==="Admin")
-        props.changeUser(true); 
+  const handleLogin = async (event) =>  
+  { 
     
+    if (mail !== "" || password !== ""|| password.length < 6) {
+    navigate('/');
+    
+    }
+
+    try {
+
+      
+      const data = { mail, password };
+      console.log(data);
+      const response = await fetch("https://parcial2-be-ec3d.vercel.app/login", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+
+      if (!response.ok) {
+        throw new Error("Error when fetching");
+      }
+
+      const respuesta = await response.json();
+      sessionStorage.setItem('token', respuesta.rol);
+      navigate('/books');
+
+    } catch (error) {
+      console.log(error)
+      console.error("", error);
+    }
   }
 
-  useEffect(() => {
-    const requestOptions = {
-        method: 'GET',
-        };
-        fetch('http://localhost:3000/login', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            setUsers(data);
-        });
-  }, []);
- 
-  return (
-    <form className="login-form">
-      <div className="form-group">
-        <label htmlFor="username">Users name or Email</label>
-        <input type="text" id="username" className="form-control" value={username} onChange={(event) => setUsername(event.target.value)} />
-      </div>
 
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" className="form-control" value={password} onChange={(event) => setPassword(event.target.value)} />
-      </div>
-      
-      <Button variant="primary" onClick={handleLogin}>
-            <Link to={"/books" }>Login</Link>
+
+  
+
+
+  return (
+    <div className="container">
+      <form onSubmit= {handleLogin}  className="login-form">
+        <div className="form-group">
+          <label htmlFor="mail"><FormattedMessage id="Users name or Email" /></label>
+          <input
+            type="email"
+            className="form-control"
+            value={mail}
+            onChange={(event) => setMail(event.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password"><FormattedMessage id="Password"/> </label>
+          <input
+            type="password"
+            className="form-control"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        </div>
+
+        <Button variant="primary" onClick={handleLogin}>
+          <Link to={"/books"}>  </Link>
+
+          Login
         </Button>
-    </form>
+      </form>
+      </div>
   );
 }
 
